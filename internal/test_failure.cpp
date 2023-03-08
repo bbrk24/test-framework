@@ -14,6 +14,6 @@ const char*& test_failure::test_name() noexcept {
     return this->m_test_name;
 }
 
-const char* const& test_failure::test_name() const noexcept {
+const char* test_failure::test_name() const noexcept {
     return this->m_test_name;
 }
