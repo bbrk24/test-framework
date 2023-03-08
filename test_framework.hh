@@ -15,7 +15,7 @@
         } catch (...) { \
             __thrown = true; \
         } \
-        test::assert(__thrown, message); \
+        test_assert(__thrown, message); \
     } while (false)
 #define test_throws(...) \
     _TEST_THROWS_( \
