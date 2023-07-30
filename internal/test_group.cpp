@@ -1,9 +1,10 @@
 #include "test_group.hh"
+#include <cstring>
+#include <iostream>
+#include <stdexcept>
+#include "test_case.hh"
 #include "test_failure.hh"
 #include "test_skipped.hh"
-#include "test_case.hh"
-#include <stdexcept>
-#include <cstring>
 
 using namespace test;
 
@@ -18,7 +19,8 @@ static std::vector<test_group*>* all_tests;
 test_group::test_group(
     const char* name,
     std::initializer_list<test_case> list
-) noexcept : m_name(name), m_list(list) {
+) noexcept
+    : m_name(name), m_list(list) {
     if (!all_tests) {
         all_tests = new std::vector<test_group*>();
     }
@@ -43,20 +45,14 @@ int test_group::run_test(const char* name) const {
         test->run();
         return 0;
     } catch (const test_failure& e) {
-        std::cout
-            << "Test "
-            << e.test_name()
-            << " failed: "
-            << e.what()
-            << std::endl;
+        std::cout << "Test " << e.test_name() << " failed: " << e.what()
+                  << std::endl;
     } catch (const test_skipped& e) {
         std::cout << "Test " << e.test_name() << " skipped." << std::endl;
         return 0;
     } catch (const std::exception& e) {
-        std::cout
-            << "Test failed with uncaught exception:\n\t"
-            << e.what()
-            << std::endl;
+        std::cout << "Test failed with uncaught exception:\n\t" << e.what()
+                  << std::endl;
     } catch (...) {
         std::cout << "Test failed with uncaught error." << std::endl;
     }
@@ -75,21 +71,15 @@ void test_group::run_tests(counters& c) const noexcept {
             --c.not_run;
             ++passed;
         } catch (const test_failure& e) {
-            std::cout
-                << "Test "
-                << e.test_name()
-                << " failed: "
-                << e.what()
-                << std::endl;
+            std::cout << "Test " << e.test_name() << " failed: " << e.what()
+                      << std::endl;
             --c.not_run;
             ++c.failed;
         } catch (const test_skipped& e) {
             std::cout << "Test " << e.test_name() << " skipped." << std::endl;
         } catch (const std::exception& e) {
-            std::cout
-                << "Test failed with uncaught exception:\n\t"
-                << e.what()
-                << std::endl;
+            std::cout << "Test failed with uncaught exception:\n\t" << e.what()
+                      << std::endl;
             --c.not_run;
             ++c.failed;
             break;
@@ -101,12 +91,8 @@ void test_group::run_tests(counters& c) const noexcept {
         }
     }
 
-    std::cout
-        << passed
-        << "/"
-        << this->m_list.size()
-        << " tests passed."
-        << std::endl;
+    std::cout << passed << "/" << this->m_list.size() << " tests passed."
+              << std::endl;
     c.passed += passed;
 }
 
@@ -125,20 +111,15 @@ test_group test::operator+=(
 
 int test::run_all_tests() noexcept {
     test_group::counters c = { 0, 0, 0 };
-    for (auto group : *all_tests) {
-        group->run_tests(c);
-        std::cout << "\n";
+    if (all_tests != nullptr) {
+        for (auto group : *all_tests) {
+            group->run_tests(c);
+            std::cout << "\n";
+        }
     }
-    std::cout
-        << c.passed
-        << " passed, "
-        << c.failed
-        << " failed, "
-        << c.not_run
-        << " skipped ("
-        << c.passed + c.failed + c.not_run
-        << " total)"
-        << std::endl;
+    std::cout << c.passed << " passed, " << c.failed << " failed, " << c.not_run
+              << " skipped (" << c.passed + c.failed + c.not_run << " total)"
+              << std::endl;
 
     return c.failed ? 1 : 0;
 }

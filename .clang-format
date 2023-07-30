@@ -1,0 +1,15 @@
+---
+BasedOnStyle: Chromium
+AccessModifierOffset: -4
+AlignAfterOpenBracket: BlockIndent
+AlignEscapedNewlines: DontAlign
+AllowAllArgumentsOnNextLine: false
+AttributeMacros:
+  - UNLIKELY
+BinPackArguments: false
+Cpp11BracedListStyle: false
+EmptyLineBeforeAccessModifier: Never
+IndentWidth: 4
+InsertBraces: true
+PenaltyReturnTypeOnItsOwnLine: 220
+SpaceInEmptyBlock: true

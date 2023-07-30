@@ -1,11 +1,11 @@
 #pragma once
 
-#include "internal/test_group.hh"
-#include "internal/test_case.hh"
 #include "internal/assertions.hh"
+#include "internal/test_case.hh"
+#include "internal/test_group.hh"
 
-#define testgroup(name) const test::test_group name = test::test_name(# name) +=
-#define testcase(name) test::test_name(# name) + []()
+#define testgroup(name) const test::test_group name = test::test_name(#name) +=
+#define testcase(name) test::test_name(#name) + []()
 
 #define _TEST_THROWS_(call, message, ...) \
     do { \

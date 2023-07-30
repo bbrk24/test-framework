@@ -1,15 +1,16 @@
 #include "test_case.hh"
-#include "test_name.hh"
-#include "test_failure.hh"
-#include "test_skipped.hh"
 #include <iostream>
+#include "test_failure.hh"
+#include "test_name.hh"
+#include "test_skipped.hh"
 
 using namespace test;
 
 test_case::test_case(
     const char* name,
     const std::function<void()>& test
-) noexcept : m_name(name), m_test(test) { }
+) noexcept
+    : m_name(name), m_test(test) { }
 
 test_case test::operator+(
     const test_name& lhs,
