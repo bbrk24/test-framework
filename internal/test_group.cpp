@@ -14,7 +14,7 @@ struct test_group::counters {
     size_t not_run;
 };
 
-static std::vector<test_group*>* all_tests;
+std::vector<test_group*>* test_group::all_tests;
 
 test_group::test_group(
     const char* name,
@@ -111,8 +111,8 @@ test_group test::operator+=(
 
 int test::run_all_tests() noexcept {
     test_group::counters c = { 0, 0, 0 };
-    if (all_tests != nullptr) {
-        for (auto group : *all_tests) {
+    if (test_group::all_tests != nullptr) {
+        for (auto group : *test_group::all_tests) {
             group->run_tests(c);
             std::cout << "\n";
         }

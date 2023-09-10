@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <initializer_list>
+#include <utility>
 
 namespace test {
 class test_group;
@@ -20,6 +21,12 @@ test_group operator+=(
     const std::initializer_list<test_case>& rhs
 ) noexcept;
 
+template <class T>
+test_group operator*=(
+    std::pair<test_name, T> lhs,
+    std::function<void(typename T::value_type::second_type)> rhs
+);
+
 class test_name {
     friend test_group operator+=(
         const test_name& lhs,
@@ -29,6 +36,11 @@ class test_name {
         const test_name& lhs,
         const std::function<void()>& rhs
     ) noexcept;
+    template <class T>
+    friend test_group operator*=(
+        std::pair<test_name, T> lhs,
+        std::function<void(typename T::value_type::second_type)> rhs
+    );
 public:
     constexpr explicit test_name(const char* name) noexcept : m_name(name) { }
 private:

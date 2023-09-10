@@ -2,6 +2,9 @@
 BasedOnStyle: Chromium
 AccessModifierOffset: -4
 AlignAfterOpenBracket: BlockIndent
+AlignEscapedNewlines: DontAlign
+AllowAllArgumentsOnNextLine: false
+BinPackArguments: false
 Cpp11BracedListStyle: false
 EmptyLineBeforeAccessModifier: Never
 IndentWidth: 4
